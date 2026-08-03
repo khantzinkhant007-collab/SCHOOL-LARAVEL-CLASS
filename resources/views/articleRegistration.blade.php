@@ -25,12 +25,14 @@
                 <div class="flex justify-between py-3">
                     <div class="w-4/12 mr-5">
                         <label class="block text-gray-500 text-sm uppercase" for="image">画像ファイル</label>
-                        <input type="file" name="image" id="image" accept="image/*"
-                            class="w-full h-80 text-xs px-3 py-2 border border-gray-300 rounded-md">
-                        <figure id="imagePreviewArea" class="hidden mt-3">
-                            <img id="imagePreview" src="" alt="画像プレビュー"
-                                class="w-32 h-24 object-cover object-top border border-gray-300 rounded-md">
-                        </figure>
+                        <div class="relative w-full h-80 overflow-hidden border border-gray-300 rounded-md">
+                            <input type="file" name="image" id="image" accept="image/*"
+                                class="relative z-10 w-full text-xs px-3 py-2 bg-white">
+                            <figure id="imagePreviewArea" class="absolute inset-x-3 top-12 bottom-3 hidden">
+                                <img id="imagePreview" src="" alt="画像プレビュー"
+                                    class="w-full h-full object-contain object-top rounded-md">
+                            </figure>
+                        </div>
                         @error('image')
                             <p class="text-sm text-red-600 my-2">
                                 {{ $message }}

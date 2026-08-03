@@ -6,7 +6,6 @@ use App\Http\Resources\SampleResource;
 use App\Libs\JsonConvert;
 use Illuminate\Http\Request;
 use App\Models\Sample;
-use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class Sample11ApiController extends Controller
@@ -16,36 +15,18 @@ class Sample11ApiController extends Controller
      */
     public function index()
     {
-        //
         $samples = Sample::orderBy("created_at", "desc")->get();
         $convert = new JsonConvert();
-        if($samples){
-            // return response()->json(
-            //     ["data" => SampleResource::collection($samples)],
-            //     Response::HTTP_OK,
-            // ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-            // JSON_UNESCAPED_UNICODE
-            // );
-            $samples = new SampleResource($samples);
+
+        if ($samples->isNotEmpty()) {
+            $samples = SampleResource::collection($samples);
             $status = Response::HTTP_OK;
-
-        }else{
-            // return response()->json(
-            //     [
-            //          "data" => [
-            //         "status" => "error",
-            //         "message" => "データが存在しません。"
-            //          ]
-            //     ],
-            //     Response::HTTP_NOT_FOUND,
-            // ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-            // JSON_UNESCAPED_UNICODE
-            //);
+        } else {
+            $samples = null;
             $status = Response::HTTP_NOT_FOUND;
-
         }
-        return $convert->toJson($samples,$status);
 
+        return $convert->toJson($samples, $status);
     }
 
     /**
@@ -61,40 +42,17 @@ class Sample11ApiController extends Controller
      */
     public function show(string $id)
     {
-        //
         $sample = Sample::find($id);
         $convert = new JsonConvert();
 
-        if($sample){
-            // return response()->json(
-            //     ["data"=> new SampleResource($sample)],
-            //     Response::HTTP_OK,
-            //     ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-            //     JSON_UNESCAPED_UNICODE
-
-            // );
+        if ($sample) {
             $sample = new SampleResource($sample);
             $status = Response::HTTP_OK;
-
-
-        }else{
-            // return response()->json(
-            //     [
-            //         "status" => "error",
-            //         "message" => "データ保存しません。"
-            //     ],
-            //     Response::HTTP_NOT_FOUND,
-            //     ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-            //     JSON_UNESCAPED_UNICODE
-
-            // );
+        } else {
             $status = Response::HTTP_NOT_FOUND;
-
-
         }
-        return $convert->toJson($sample,$status);
 
-
+        return $convert->toJson($sample, $status);
     }
 
     /**

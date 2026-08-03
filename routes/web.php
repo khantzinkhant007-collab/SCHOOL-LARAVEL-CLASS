@@ -12,6 +12,9 @@ use App\Http\Controllers\Sample06Controller;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\Kadai02_2Controller;
 use App\Http\Controllers\Kadai12Controller;
+use App\Http\Controllers\Sample02_1Controller;
+use App\Http\Controllers\Sample02_2Controller;
+use App\Http\Controllers\Sample02_3Controller;
 
 
 
@@ -45,6 +48,16 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// sample02
+Route::get('/sample02_1', [Sample02_1Controller::class, 'index'])
+    ->name('sample02_1');
+
+Route::get('/sample02_2', [Sample02_2Controller::class, 'index'])
+    ->name('sample02_2');
+
+Route::get('/sample02_3', [Sample02_3Controller::class, 'index'])
+    ->name('sample02_3');
 
 //kadai03
 Route::get('/kadai03',[Kadai03Controller::class, 'index']);
